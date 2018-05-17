@@ -32,6 +32,6 @@ productsFromDocument document = matchedProducts
     matches = (cursor $// findResults) >>= child >>= findProducts
     matchedProducts = map parseProduct matches
     parseProduct c = Product (parseTitle c) (parsePrice c) (parseUrl c)
-    parseTitle c = T.unpack . T.concat $ c $// findTitle &// content
-    parsePrice c = takeWhile C.isDigit $ dropWhile (not . C.isDigit) $ T.unpack . T.concat $ c $// findPrice &// content
+    parseTitle c =  T.unpack . T.strip . T.concat $ c $// findTitle &// content
+    parsePrice c = takeWhile C.isDigit $ filter (/= '.') $ dropWhile (not . C.isDigit) $ T.unpack . T.concat $ c $// findPrice &// content
     parseUrl c = T.unpack . T.concat $ take 1 $ (c $// findLink) >>= attribute "href"
