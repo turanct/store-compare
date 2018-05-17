@@ -8,6 +8,7 @@ module Main where
 import Product
 import Keymusic
 import Thomann
+import Andertons
 
 import Prelude
 import Control.Monad.IO.Class
@@ -28,6 +29,7 @@ server = productCompare
           return (store, products)
         stores = [ ("Keymusic", queryKeymusic)
                  , ("Thomann", queryThomann)
+                 , ("Andertons", queryAndertons)
                  ]
 
 storeAPI :: Proxy StoreAPI
