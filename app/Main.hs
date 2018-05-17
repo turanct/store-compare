@@ -16,14 +16,19 @@ import Data.Aeson
 import Network.Wai
 import Network.Wai.Handler.Warp
 
-type StoreAPI = "product" :> Capture "name" String  :> Get '[JSON] [Product]
+type StoreAPI = "product" :> Capture "name" String  :> Get '[JSON] [(String, [Product])]
 
 server :: Server StoreAPI
 server = productCompare
-  where productCompare :: String -> Handler [Product]
-        productCompare name = do
-          products <- liftIO $ queryThomann name
-          return products
+  where productCompare :: String -> Handler [(String, [Product])]
+        productCompare searchName = mapM (liftIO . productsForStore searchName) stores
+
+        productsForStore searchName (store, query) = do
+          products <- query searchName
+          return (store, products)
+        stores = [ ("KeyMusic", queryKeymusic)
+                 , ("Thomann", queryThomann)
+                 ]
 
 storeAPI :: Proxy StoreAPI
 storeAPI = Proxy
