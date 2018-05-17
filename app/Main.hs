@@ -26,7 +26,7 @@ server = productCompare
         productsForStore searchName (store, query) = do
           products <- query searchName
           return (store, products)
-        stores = [ ("KeyMusic", queryKeymusic)
+        stores = [ ("Keymusic", queryKeymusic)
                  , ("Thomann", queryThomann)
                  ]
 
