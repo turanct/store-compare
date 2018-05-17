@@ -48,6 +48,7 @@ executables:
     - aeson
     - wai
     - warp
+    - async
 
 tests:
   store-compare-test:

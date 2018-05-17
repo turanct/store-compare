@@ -17,12 +17,14 @@ import Data.Aeson
 import Network.Wai
 import Network.Wai.Handler.Warp
 
+import Control.Concurrent.Async
+
 type StoreAPI = "product" :> Capture "name" String  :> Get '[JSON] [(String, [Product])]
 
 server :: Server StoreAPI
 server = productCompare
   where productCompare :: String -> Handler [(String, [Product])]
-        productCompare searchName = mapM (liftIO . productsForStore searchName) stores
+        productCompare searchName = liftIO $ mapConcurrently (productsForStore searchName) stores
 
         productsForStore searchName (store, query) = do
           products <- query searchName
