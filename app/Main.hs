@@ -10,6 +10,7 @@ import Keymusic
 import Thomann
 import Bax
 import Andertons
+import Tweedehands
 
 import Prelude
 import Control.Monad.IO.Class
@@ -34,6 +35,7 @@ server = productCompare
                  , ("Thomann", queryThomann)
                  , ("Bax-shop", queryBax)
                  , ("Andertons", queryAndertons)
+                 , ("Tweedehands", queryTweedehands)
                  ]
 
 storeAPI :: Proxy StoreAPI
