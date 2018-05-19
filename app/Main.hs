@@ -8,6 +8,7 @@ module Main where
 import Product
 import Keymusic
 import Thomann
+import Bax
 import Andertons
 
 import Prelude
@@ -31,6 +32,7 @@ server = productCompare
           return (store, products)
         stores = [ ("Keymusic", queryKeymusic)
                  , ("Thomann", queryThomann)
+                 , ("Bax-shop", queryBax)
                  , ("Andertons", queryAndertons)
                  ]
 
