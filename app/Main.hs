@@ -6,6 +6,7 @@
 module Main where
 
 import Product
+import Store
 import Keymusic
 import Thomann
 import Bax
@@ -21,16 +22,15 @@ import Network.Wai.Handler.Warp
 
 import Control.Concurrent.Async
 
-type StoreAPI = "product" :> Capture "name" String  :> Get '[JSON] [(String, [Product])]
+type StoreAPI = "product" :> Capture "name" String  :> Get '[JSON] [Store]
 
 server :: Server StoreAPI
 server = productCompare
-  where productCompare :: String -> Handler [(String, [Product])]
+  where productCompare :: String -> Handler [Store]
         productCompare searchName = liftIO $ mapConcurrently (productsForStore searchName) stores
 
-        productsForStore searchName (store, query) = do
-          products <- query searchName
-          return (store, products)
+        productsForStore searchName (store, query) = Store store <$> query searchName
+
         stores = [ ("Keymusic", queryKeymusic)
                  , ("Thomann", queryThomann)
                  , ("Bax-shop", queryBax)
