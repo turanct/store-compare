@@ -16,7 +16,6 @@ queryThomann name = do
   request <- N.parseRequest $ "GET https://www.thomann.de/be/search_dir.html?sw=" ++ name
   response <- N.httpLBS request
   let document = parseLBS $ N.getResponseBody response
-  -- print document
   let products = productsFromDocument document
   return products
 
