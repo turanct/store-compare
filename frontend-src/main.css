@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.store {
+    display: flex;
+    flex-flow: column;
+}
+
+.store h1 {
+    margin: 40px 0 20px 0;
+}
+
+.product {
+    display: flex;
+    flex-flow: row;
+}
+
+.product-price {
+    width: 40px;
+}
+
+.product-name {
+    width: 400px;
+}
+
+.product-link {
+    width: 40px;
+}

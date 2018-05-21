@@ -75,8 +75,8 @@ view model =
     , div [ class "stores"]
         (List.map
           (\store -> div [ class "store" ]
-            [ div [] [ h1 [] [ text store.name ] ]
-            , div [ class "products" ]
+            [ div [ class "store-name" ] [ h1 [] [ text store.name ] ]
+            , div [ class "store-products" ]
               (List.map
                 (\product -> div [ class "product" ]
                     [ div [ class "product-price" ] [ text product.price ]
