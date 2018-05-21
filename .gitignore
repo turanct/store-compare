@@ -1,3 +1,5 @@
 .stack-work/
 store-compare.cabal
 *~
+/frontend-compiled/*
+/elm-stuff/*

@@ -19,13 +19,15 @@ import Servant
 import Data.Aeson
 import Network.Wai
 import Network.Wai.Handler.Warp
+import Network.Wai.Middleware.Cors
 
 import Control.Concurrent.Async
 
 type StoreAPI = "product" :> Capture "name" String  :> Get '[JSON] [Store]
+           :<|> Raw
 
 server :: Server StoreAPI
-server = productCompare
+server = productCompare :<|> serveDirectoryWebApp "frontend-compiled"
   where productCompare :: String -> Handler [Store]
         productCompare searchName = liftIO $ mapConcurrently (productsForStore searchName) stores
 
@@ -42,7 +44,7 @@ storeAPI :: Proxy StoreAPI
 storeAPI = Proxy
 
 app :: Application
-app = serve storeAPI server
+app = simpleCors (serve storeAPI server)
 
 main :: IO ()
 main = run 8080 app

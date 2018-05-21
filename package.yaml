@@ -48,6 +48,7 @@ executables:
     - aeson
     - wai
     - warp
+    - wai-cors
     - async
 
 tests:
