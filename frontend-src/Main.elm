@@ -1,3 +1,4 @@
+import Browser
 import Html exposing (..)
 import Html.Attributes exposing (class, placeholder, href)
 import Html.Events exposing (onInput, onClick, onSubmit)
@@ -6,7 +7,7 @@ import Json.Decode as Decode
 
 
 main =
-  Html.program
+  Browser.element
     { init = init
     , view = view
     , update = update
@@ -32,8 +33,8 @@ type alias Model =
   , storesAndProducts : List Store
   }
 
-init : (Model, Cmd Msg)
-init =
+init : () -> (Model, Cmd Msg)
+init _ =
   ( { searchTerm = "" , storesAndProducts = [] }
   , Cmd.none
   )
@@ -74,19 +75,19 @@ view model =
         ]]
     , div [ class "stores"]
         (List.map
-          (\store -> div [ class "store" ]
-            [ div [ class "store-name" ] [ h1 [] [ text store.name ] ]
+          (\currentStore -> div [ class "store" ]
+            [ div [ class "store-name" ] [ h1 [] [ text currentStore.name ] ]
             , div [ class "store-products" ]
               (List.map
-                (\product -> div [ class "product" ]
-                    [ div [ class "product-price" ] [ text product.price ]
-                    , div [ class "product-name" ] [ text product.name ]
-                    , div [ class "product-link" ] [ a [ href product.url ] [ text "url" ] ] ])
-                store.products
+                (\currentProduct -> div [ class "product" ]
+                    [ div [ class "product-price" ] [ text currentProduct.price ]
+                    , div [ class "product-name" ] [ text currentProduct.name ]
+                    , div [ class "product-link" ] [ a [ href currentProduct.url ] [ text "url" ] ] ])
+                currentStore.products
               )
             ])
           (List.filter
-            (\store -> List.length store.products > 0)
+            (\currentStore -> List.length currentStore.products > 0)
             model.storesAndProducts))
     ]
 
